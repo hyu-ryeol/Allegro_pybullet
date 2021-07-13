@@ -3,8 +3,6 @@ import numpy as np
 import time
 import pybullet_data
 import modern_robotics as mr
-import matplotlib.pyplot as plt
-import scipy.linalg as la
 
 p.connect(p.GUI)
 
@@ -22,23 +20,23 @@ p.setJointMotorControlArray(robotid,jointIndices=[1,2,3,4,6,7,8,9,11,12,13,14,16
                            controlMode=p.VELOCITY_CONTROL,
                            forces=[0]*16)
 
-timeStepId = p.addUserDebugParameter("timeStep", 0.001, 0.1, 0.01)
-jointId_11 = p.addUserDebugParameter("joint11", -2, 1.5,2)
-jointId_12 = p.addUserDebugParameter("joint12", 0.001, 1.5, 0)
-jointId_13 = p.addUserDebugParameter("joint13", 0.001, 1.5, 0)
-jointId_14 = p.addUserDebugParameter("joint14", 0.001, 1.5, 0)
-jointId_21 = p.addUserDebugParameter("joint21", 0.001, 1.5, 0)
-jointId_22 = p.addUserDebugParameter("joint22", 0.001, 1.5, 0)
-jointId_23 = p.addUserDebugParameter("joint23", 0.001, 1.5, 0)
-jointId_24 = p.addUserDebugParameter("joint24", 0.001, 1.5, 0)
-jointId_31 = p.addUserDebugParameter("joint31", 0.001, 1.5, 0)
-jointId_32 = p.addUserDebugParameter("joint32", 0.001, 1.5, 0)
-jointId_33 = p.addUserDebugParameter("joint33", 0.001, 1.5, 0)
-jointId_34 = p.addUserDebugParameter("joint34", 0.001, 1.5, 0)
-jointId_41 = p.addUserDebugParameter("joint41", 0.001, 1.5, 0)
-jointId_42 = p.addUserDebugParameter("joint42", 0.001, 1.5, 0)
-jointId_43 = p.addUserDebugParameter("joint43", 0.001, 1.5, 0)
-jointId_44 = p.addUserDebugParameter("joint44", 0.001, 1.5, 0.01)
+# timeStepId = p.addUserDebugParameter("timeStep", 0.001, 0.1, 0.01)
+# jointId_11 = p.addUserDebugParameter("joint11", -2, 1.5,2)
+# jointId_12 = p.addUserDebugParameter("joint12", 0.001, 1.5, 0)
+# jointId_13 = p.addUserDebugParameter("joint13", 0.001, 1.5, 0)
+# jointId_14 = p.addUserDebugParameter("joint14", 0.001, 1.5, 0)
+# jointId_21 = p.addUserDebugParameter("joint21", 0.001, 1.5, 0)
+# jointId_22 = p.addUserDebugParameter("joint22", 0.001, 1.5, 0)
+# jointId_23 = p.addUserDebugParameter("joint23", 0.001, 1.5, 0)
+# jointId_24 = p.addUserDebugParameter("joint24", 0.001, 1.5, 0)
+# jointId_31 = p.addUserDebugParameter("joint31", 0.001, 1.5, 0)
+# jointId_32 = p.addUserDebugParameter("joint32", 0.001, 1.5, 0)
+# jointId_33 = p.addUserDebugParameter("joint33", 0.001, 1.5, 0)
+# jointId_34 = p.addUserDebugParameter("joint34", 0.001, 1.5, 0)
+# jointId_41 = p.addUserDebugParameter("joint41", 0.001, 1.5, 0)
+# jointId_42 = p.addUserDebugParameter("joint42", 0.001, 1.5, 0)
+# jointId_43 = p.addUserDebugParameter("joint43", 0.001, 1.5, 0)
+# jointId_44 = p.addUserDebugParameter("joint44", 0.001, 1.5, 0.01)
 
 useRealTimeSim = False
 p.setRealTimeSimulation(useRealTimeSim)
@@ -133,23 +131,24 @@ des_thetalist4=[0.7299820072825081, 0.4579193740155175, 0.23919718596737496, 0.7
 Slist=np.hstack([S1])
 
 while (1):
-	timeStep = p.readUserDebugParameter(timeStepId)
-	des_joint11 = p.readUserDebugParameter(jointId_11);
-	des_joint12 = p.readUserDebugParameter(jointId_12);
-	des_joint13 = p.readUserDebugParameter(jointId_13);
-	des_joint14 = p.readUserDebugParameter(jointId_14);
-	des_joint21 = p.readUserDebugParameter(jointId_21);
-	des_joint22 = p.readUserDebugParameter(jointId_22);
-	des_joint23 = p.readUserDebugParameter(jointId_23);
-	des_joint24 = p.readUserDebugParameter(jointId_24);
-	des_joint31 = p.readUserDebugParameter(jointId_31);
-	des_joint32 = p.readUserDebugParameter(jointId_32);
-	des_joint33 = p.readUserDebugParameter(jointId_33);
-	des_joint34 = p.readUserDebugParameter(jointId_34);
-	des_joint41 = p.readUserDebugParameter(jointId_41);
-	des_joint42 = p.readUserDebugParameter(jointId_42);
-	des_joint43 = p.readUserDebugParameter(jointId_43);
-	des_joint44 = p.readUserDebugParameter(jointId_44);
+	timeStep=0.001
+	# timeStep = p.readUserDebugParameter(timeStepId)
+	# des_joint11 = p.readUserDebugParameter(jointId_11);
+	# des_joint12 = p.readUserDebugParameter(jointId_12);
+	# des_joint13 = p.readUserDebugParameter(jointId_13);
+	# des_joint14 = p.readUserDebugParameter(jointId_14);
+	# des_joint21 = p.readUserDebugParameter(jointId_21);
+	# des_joint22 = p.readUserDebugParameter(jointId_22);
+	# des_joint23 = p.readUserDebugParameter(jointId_23);
+	# des_joint24 = p.readUserDebugParameter(jointId_24);
+	# des_joint31 = p.readUserDebugParameter(jointId_31);
+	# des_joint32 = p.readUserDebugParameter(jointId_32);
+	# des_joint33 = p.readUserDebugParameter(jointId_33);
+	# des_joint34 = p.readUserDebugParameter(jointId_34);
+	# des_joint41 = p.readUserDebugParameter(jointId_41);
+	# des_joint42 = p.readUserDebugParameter(jointId_42);
+	# des_joint43 = p.readUserDebugParameter(jointId_43);
+	# des_joint44 = p.readUserDebugParameter(jointId_44);
 	# des_thetalist1=[des_joint11,des_joint12,des_joint13,des_joint14]
 	# des_thetalist2=[des_joint21,des_joint22,des_joint23,des_joint24]
 	# des_thetalist3=[des_joint31,des_joint32,des_joint33,des_joint34]
@@ -169,10 +168,7 @@ while (1):
 	thetalist2=finger2_jointState[0:4,0]
 	thetalist3=finger3_jointState[0:4,0]
 	thetalist4=finger4_jointState[0:4,0]
-	thetalist=np.hstack([thetalist1])
-	# print(np.shape(thetalist))
-	# aa=np.array(thetalist3,dtype=float)
-	# print(np.round(aa,3))
+
 	# actual joint velocities
 	dthetalist1=finger1_jointState[0:4,1]
 	dthetalist2=finger2_jointState[0:4,1]
@@ -181,14 +177,16 @@ while (1):
 
 
 	#Wrench(F)
-	des_F=[0,0,0,0,0,10]
+	des_F=[0,0,0,10,10,0]
+	o=[0,0,0,0]
 	#Jacobian
-	Ja=mr.JacobianSpace(Slist,thetalist)
-	Ja_pinv=np.linalg.pinv(Ja)
-	Ja_trsp=Ja.T
+	J=np.array(mr.JacobianSpace(Slist,thetalist1))
+	Ja=np.vstack((o,o,o,J[3,:],J[4,:],J[5,:]))
+	tau= np.dot(Ja.T, des_F)
+	# print(thetalist1)
+	print(Ja.T)
+	# print(tau)
 	
-	tau= np.dot(Ja_trsp, des_F)
-	print(np.dot(Ja_trsp,Ja))
 	
 	# desired  joint velociy&acceleration
 	des_dthetalist1=[0,0,0,0]
