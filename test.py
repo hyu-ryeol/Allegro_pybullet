@@ -9,7 +9,7 @@ robotid = p.loadURDF("robot1.urdf",[0,0,0.095],[0,0,0,1])
 objId = p.loadURDF("teddy_vhacd.urdf",[0,0,0],[0,0,0,1])
 jointNumber = 21
 maxForce = 10
-p.setGravity(0,0,-10)
+p.setGravity(0,0,-9.8)
 finger1_jointIndex = [1,2,3,4]
 finger2_jointIndex = [6,7,8,9]
 finger3_jointIndex = [11,12,13,14]
@@ -64,5 +64,5 @@ while(1):
 
 
 	p.stepSimulation()
-	time.sleep(0.01)
+	time.sleep(0.001)
 p.disconnect(p.GUI)

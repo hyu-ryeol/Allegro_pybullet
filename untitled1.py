@@ -40,13 +40,13 @@ p.setJointMotorControlArray(robotid,jointIndices=[1,2,3,4,6,7,8,9,11,12,13,14,16
 
 useRealTimeSim = False
 p.setRealTimeSimulation(useRealTimeSim)
-p.setGravity(0,0,-10)
-g=np.array([0,0,-10])
+p.setGravity(0,0,-9.81)
+g=np.array([0,0,-9.81])
 
 
 # M Lists for each finger (finger1,2,3 has same M list)
 M_01= np.array([[1,	0,	0,	0],    
-				[0,	0.996194698096079,	0.0871557426981309,	0.0435],  
+				[0,	0.996194698096079,	0.0871557426981309,	0.0435],   
 				[0,	-0.0871557426981309,	0.996194698096079,	-0.001542],  
 				[0,	0,	0,	1]])
 M_02= np.array([[1,	0,	0,	0],	   
@@ -80,6 +80,41 @@ S2=np.array([[0,0,1,0,0,0],		[0,1,0,-0.0171000007539988,0,0],		[0,1,0,-0.0711000
 S3=np.array([[0,-0.0871557426981309,0.996194698096079,-0.0434688622740562,0,0],		[0,0.996194698096079,0.0871557426981309,-0.0186551432283326,0,0],		[0,0.996194698096079,0.0871557426981309,-0.0726551475161611,0,0],		[0,0.996194698096079,0.0871557426981309,-0.111055152273398,0,0]]).T
 S4=np.array([[7.79953824603932e-11,-0.0871557418066397,-0.996194698174074,-0.0232674624619271,-0.0181307442555467,0.00158623456456879],			[-8.91491310595254e-10,0.996194698174074,-0.0871557418066397,0.0711270282984123,-0.00115045563636781,-0.0131497689662933],			[1,8.94896662499077e-10,0,6.97164170963295e-11,-0.0779044330120087,-0.0743606090663781],			[1,8.94896662499077e-10,0,7.37253779793818e-11,-0.0823842361569405,-0.125565022241961]]).T
 # print(np.shape(Slist))
+
+#B lists for each finger
+# print(mr.Adjoint(M_12))
+# print(S1[:,0])
+M_1=np.matmul(np.matmul(np.matmul(np.matmul(M_01,M_12),M_23),M_34),M_45)
+M_2=np.matmul(np.matmul(np.matmul(np.matmul(M_02,M_12),M_23),M_34),M_45)
+M_3=np.matmul(np.matmul(np.matmul(np.matmul(M_03,M_12),M_23),M_34),M_45)
+M_4=np.matmul(np.matmul(np.matmul(np.matmul(M4_01,M4_12),M4_23),M4_34),M4_45)
+
+
+B11=np.dot(mr.Adjoint(np.linalg.inv(M_01)),S1[:,0])
+B12=np.dot(mr.Adjoint(np.linalg.inv(M_12)),S1[:,1])
+B13=np.dot(mr.Adjoint(np.linalg.inv(M_23)),S1[:,2])
+B14=np.dot(mr.Adjoint(np.linalg.inv(M_34)),S1[:,3])
+B1=np.array([B11,B12,B13,B14]).T
+
+B21=np.dot(mr.Adjoint(np.linalg.inv(M_02)),S2[:,0])
+B22=np.dot(mr.Adjoint(np.linalg.inv(M_12)),S2[:,1])
+B23=np.dot(mr.Adjoint(np.linalg.inv(M_23)),S2[:,2])
+B24=np.dot(mr.Adjoint(np.linalg.inv(M_34)),S2[:,3])
+B2=np.array([B21,B22,B23,B24]).T
+
+B31=np.dot(mr.Adjoint(np.linalg.inv(M_01)),S3[:,0])
+B32=np.dot(mr.Adjoint(np.linalg.inv(M_12)),S3[:,1])
+B33=np.dot(mr.Adjoint(np.linalg.inv(M_23)),S3[:,2])
+B34=np.dot(mr.Adjoint(np.linalg.inv(M_34)),S3[:,3])
+B3=np.array([B31,B32,B33,B34]).T
+
+B41=np.dot(mr.Adjoint(M4_01),S4[:,0])
+B42=np.dot(mr.Adjoint(M4_12),S4[:,1])
+B43=np.dot(mr.Adjoint(M4_23),S4[:,2])
+B44=np.dot(mr.Adjoint(M4_34),S4[:,3])
+B4=np.array([B41,B42,B43,B44]).T
+
+
 #G lists for each finger
 
 G0=np.array([[1e-4,0.0,0.0], 								[0.0,1e-4,0.0], 							[0.0, 0.0, 0.0001]])
@@ -129,7 +164,7 @@ des_thetalist4=[0.7299820072825081, 0.4579193740155175, 0.23919718596737496, 0.7
 # Fi = np.array(Ftip).copy()
 # taulist = np.zeros(n)
 Slist=np.hstack([S1])
-
+print(S1)
 while (1):
 	timeStep=0.001
 	# timeStep = p.readUserDebugParameter(timeStepId)
@@ -177,16 +212,15 @@ while (1):
 
 
 	#Wrench(F)
-	des_F=[0,0,0,10,10,0]
+	des_F=[0,0,0,0,0,]
 	o=[0,0,0,0]
 	#Jacobian
-	J=np.array(mr.JacobianSpace(Slist,thetalist1))
+	J=np.array(mr.JacobianBody(B1,thetalist1))
 	Ja=np.vstack((o,o,o,J[3,:],J[4,:],J[5,:]))
 	tau= np.dot(Ja.T, des_F)
 	# print(thetalist1)
 	print(Ja.T)
 	# print(tau)
-	
 	
 	# desired  joint velociy&acceleration
 	des_dthetalist1=[0,0,0,0]
@@ -216,10 +250,6 @@ while (1):
 	
 	torque1=mr.ComputedTorque(thetalist1,dthetalist1,eint,g,M1,G1,S1,des_thetalist1,des_dthetalist1,des_ddthetalist1,Kp,Ki,Kd)
 	torque2=mr.ComputedTorque(thetalist2,dthetalist2,eint,g,M2,G2,S2,des_thetalist2,des_dthetalist1,des_ddthetalist1,Kp,Ki,Kd)
-	# torque1=[0,0,0,0]
-	# torque2=[0,0,0,0]
-	
-
 	torque3=mr.ComputedTorque(thetalist3,dthetalist3,eint,g,M3,G3,S3,des_thetalist3,des_dthetalist1,des_ddthetalist1,Kp3,Ki3,Kd3)
 	torque4=mr.ComputedTorque(thetalist4,dthetalist4,eint,g,M4,G4,S4,des_thetalist4,des_dthetalist1,des_ddthetalist1,Kp,Ki,Kd)
 	# torque=np.array(torque3,dtype=float)
