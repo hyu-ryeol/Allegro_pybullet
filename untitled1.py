@@ -40,34 +40,52 @@ p.setJointMotorControlArray(robotid,jointIndices=[1,2,3,4,6,7,8,9,11,12,13,14,16
 
 useRealTimeSim = False
 p.setRealTimeSimulation(useRealTimeSim)
-p.setGravity(0,0,-9.81)
-g=np.array([0,0,-9.81])
+p.setGravity(0,0,0)
+g=np.array([0,0,0])
 
 
 # M Lists for each finger (finger1,2,3 has same M list)
 M_01= np.array([[1,	0,	0,	0],    
-				[0,	0.996194698096079,	0.0871557426981309,	0.0435],   
-				[0,	-0.0871557426981309,	0.996194698096079,	-0.001542],  
+				[0,	0.996194698096079,	0.0871557426981309,	0.04426],   
+				[0,	-0.0871557426981309,	0.996194698096079,	0.1047],  
 				[0,	0,	0,	1]])
 M_02= np.array([[1,	0,	0,	0],	   
 				[0,	1,	0,	0],	   
-				[0,	0,	1,	0.0007],	   
+				[0,	0,	1,	0.10701],	   	
 				[0,	0,	0,	1]])
 M_03= np.array([[1,	0,	0,	0],	   
 				[0,	0.996194698096079,	-0.0871557426981309,	-0.0435],	   
-				[0,	0.0871557426981309,	0.996194698096079,	-0.001542],	   
+				[0,	0.0871557426981309,	0.996194698096079,	0.10475],	   
 				[0,	0,	0,	1]])
 
-M_12= np.array([[1,	0,	0,	0],		[0,	1,	0,	0],		[0,	0,	1,	0.0164],		[0,	0,	0,	1]])
-M_23= np.array([[1,	0,	0,	0],		[0,	1,	0,	0],		[0,	0,	1,	0.054],			[0,	0,	0,	1]])
-M_34= np.array([[1,	0,	0,	0],		[0,	1,	0,	0],		[0,	0,	1,	0.0384],		[0,	0,	0,	1]])
-M_45= np.array([[1,	0,	0,	0],		[0,	1,	0,	0],		[0,	0,	1,	0.0267],		[0,	0,	0,	1]])
+M_12= np.array([[1,	0,	0,	0],		
+				[0,	1,	0,	0],		
+				[0,	0,	1,	0.0375],		
+				[0,	0,	0,	1]])
+M_23= np.array([[1,	0,	0,	0],		
+				[0,	1,	0,	0],		
+				[0,	0,	1,	0.0533],		
+				[0,	0,	0,	1]])
+M_34= np.array([[1,	0,	0,	0],		
+				[0,	1,	0,	0],			
+				[0,	0,	1,	0.0217],		
+				[0,	0,	0,	1]])
+M_45= np.array([[1,	0,	0,	0],		
+				[0,	1,	0,	0],		
+				[0,	0,	1,	0.0169],		
+				[0,	0,	0,	1]])
 
-M4_01=np.array([[-7.79953824603932e-11,	1,	-8.91491310595254e-10,	-0.0182000000000000],	   [0.0871557418066397,	8.94896662499077e-10,	0.996194698174074,	0.0193330000000000],	   [0.996194698174074,	0,	-0.0871557418066397,	-0.0459870000000000],	   [0,	0,	0,	1]])
-M4_12=np.array([[1,	0,	0,	-0.027],	   [0,	1,	0,	0.005],	   [0,	0,	1,	0.0399],	   [0,	0,	0,	1]])
-M4_23=np.array([[1,	0,	0,	0],	   [0,	1,	0,	0],	   [0,	0,	1,	0.0177],	   [0,	0,	0,	1]])
-M4_34=np.array([[1,	0,	0,	0],	   [0,	1,	0,	0],	   [0,	0,	1,	0.0514],	   [0,	0,	0,	1]])
-M4_45=np.array([[1,	0,	0,	0],	   [0,	1,	0,	0],	   [0,	0,	1,	0.0423],	   [0,	0,	0,	1]])
+M4_01=np.array([[-7.79953824603932e-11,	1,	-8.91491310595254e-10,	-0.016771],	   
+				[0.0871557418066397,	8.94896662499077e-10,	0.996194698174074,	0.021121],	   
+				[0.996194698174074,	0,	-0.0871557418066397,	0.020735],	   
+				[0,	0,	0,	1]])
+M4_12=np.array([[1,	0,	0,	-0.0098],	   
+				[0,	1,	0,	-0.0029],	   
+				[0,	0,	1,	0.0335],	  
+				 [0,	0,	0,	1]])
+M4_23=np.array([[1,	0,	0,	0],	   [0,	1,	0,	0],	   [0,	0,	1,	0.0261],	   [0,	0,	0,	1]])
+M4_34=np.array([[1,	0,	0,	0],	   [0,	1,	0,	0],	   [0,	0,	1,	0.0496],	   [0,	0,	0,	1]])
+M4_45=np.array([[1,	0,	0,	0],	   [0,	1,	0,	0],	   [0,	0,	1,	0.0297],	   [0,	0,	0,	1]])
 
 M1=np.array([M_01,M_12,M_23,M_34,M_45])
 M2=np.array([M_02,M_12,M_23,M_34,M_45])
@@ -122,6 +140,7 @@ G_1=np.array([[1.01666658333e-06,0.0,0.0],   				[0.0,6.47677333333e-07,0.0],   
 G_2=np.array([[7.95654166667e-05,1.7199e-05,8.75875e-06],   [1.7199e-05,2.47088833333e-05,2.413125e-05],[8.75875e-06,2.413125e-05,7.95654166667e-05]])
 G_3=np.array([[2.63979183333e-05,6.67968e-06,4.783625e-06], [6.67968e-06,1.34948516667e-05,9.372e-06],  [4.783625e-06,9.372e-06,2.63979183333e-05]])
 G_4=np.array([[4.701248e-06,1.255968e-06,1.2936e-06],  	    [1.255968e-06,3.649312e-06,1.7622e-06],   	[1.2936e-06,1.7622e-06,4.701248e-06]])
+G_5=np.array(np.dot(np.eye(3),9.68e-07))
 G4_1=np.array([[1.89273333333e-5,7.16716e-06,5.35568e-06],	  [7.16716e-06,1.43008213333e-05,6.8068e-06],	  [5.35568e-06,6.8068e-06,1.89273333333e-05]])
 G4_2=np.array([[4.24250866667e-06,1.032087e-06,1.603525e-06],   [1.032087e-06,4.52362633333e-06,1.44808125e-06],	   [1.603525e-06,1.44808125e-06,4.24250866667e-06]])
 G4_3=np.array([[4.30439933333e-05,9.57068e-06,5.1205e-06],	   [9.57068e-06,1.44451933333e-05,1.342825e-05],	   [5.1205e-06,1.342825e-05,4.30439933333e-05]])
@@ -130,6 +149,7 @@ Im_1=np.diag([0.0119,0.0119,0.0119])
 Im_2=np.diag([0.065,0.065,0.065])
 Im_3=np.diag([0.0355,0.0355,0.0355])
 Im_4=np.diag([0.0096,0.0096,0.0096])
+Im_5=np.diag([0.0168,0.0168,0.0168])
 Im4_1=np.diag([0.0176,0.0176,0.0176])
 Im4_2=np.diag([0.0119,0.0119,0.0119])
 Im4_3=np.diag([0.038,0.038,0.038])
@@ -140,6 +160,8 @@ G_1=np.vstack([ np.hstack ([G_1,zero]) , np.hstack([zero,Im_1])])
 G_2=np.vstack([ np.hstack ([G_2,zero]) , np.hstack([zero,Im_2])])
 G_3=np.vstack([ np.hstack ([G_3,zero]) , np.hstack([zero,Im_3])])
 G_4=np.vstack([ np.hstack ([G_4,zero]) , np.hstack([zero,Im_4])])
+G_5=np.vstack([ np.hstack ([G_5,zero]) , np.hstack([zero,Im_5])])
+
 G4_1=np.vstack([ np.hstack ([G4_1,zero]) , np.hstack([zero,Im4_1])])
 G4_2=np.vstack([ np.hstack ([G4_2,zero]) , np.hstack([zero,Im4_2])])
 G4_3=np.vstack([ np.hstack ([G4_3,zero]) , np.hstack([zero,Im4_3])])
@@ -164,7 +186,6 @@ des_thetalist4=[0.7299820072825081, 0.4579193740155175, 0.23919718596737496, 0.7
 # Fi = np.array(Ftip).copy()
 # taulist = np.zeros(n)
 Slist=np.hstack([S1])
-print(S1)
 while (1):
 	timeStep=0.001
 	# timeStep = p.readUserDebugParameter(timeStepId)
@@ -212,25 +233,26 @@ while (1):
 
 
 	#Wrench(F)
-	des_F=[0,0,0,0,0,]
+	des_F=[0,0,0,0,0,-10]
 	o=[0,0,0,0]
 	#Jacobian
 	J=np.array(mr.JacobianBody(B1,thetalist1))
 	Ja=np.vstack((o,o,o,J[3,:],J[4,:],J[5,:]))
 	tau= np.dot(Ja.T, des_F)
 	# print(thetalist1)
-	print(Ja.T)
+	# print(Ja.T)
 	# print(tau)
 	
 	# desired  joint velociy&acceleration
 	des_dthetalist1=[0,0,0,0]
 	des_ddthetalist1=[0,0,0,0]
-	Kp=4000
-	Ki=100
-	Kd=150
-	Kp3=4000
-	Ki3=0
-	Kd3=200
+	Kp=600
+	Ki=0
+	Kd=10
+	Kp4=800
+	Ki4=0
+	Kd4=10
+	
 	
 	eint=np.array([0,0,0,0])
 
@@ -250,25 +272,25 @@ while (1):
 	
 	torque1=mr.ComputedTorque(thetalist1,dthetalist1,eint,g,M1,G1,S1,des_thetalist1,des_dthetalist1,des_ddthetalist1,Kp,Ki,Kd)
 	torque2=mr.ComputedTorque(thetalist2,dthetalist2,eint,g,M2,G2,S2,des_thetalist2,des_dthetalist1,des_ddthetalist1,Kp,Ki,Kd)
-	torque3=mr.ComputedTorque(thetalist3,dthetalist3,eint,g,M3,G3,S3,des_thetalist3,des_dthetalist1,des_ddthetalist1,Kp3,Ki3,Kd3)
-	torque4=mr.ComputedTorque(thetalist4,dthetalist4,eint,g,M4,G4,S4,des_thetalist4,des_dthetalist1,des_ddthetalist1,Kp,Ki,Kd)
-	# torque=np.array(torque3,dtype=float)
+	torque3=mr.ComputedTorque(thetalist3,dthetalist3,eint,g,M3,G3,S3,des_thetalist3,des_dthetalist1,des_ddthetalist1,Kp,Ki,Kd)
+	torque4=mr.ComputedTorque(thetalist4,dthetalist4,eint,g,M4,G4,S4,des_thetalist4,des_dthetalist1,des_ddthetalist1,Kp4,Ki4,Kd4)
+	#torque=np.array(torque3,dtype=float)
 
 	# print(np.round(torque,3))       
-	# p.setJointMotorControlArray(robotid,
- #                           jointIndices=[1,2,3,4,6,7,8,9,11,12,13,14,16,17,18,19],
- #                           controlMode=p.TORQUE_CONTROL,
- #                           forces= [torque1[0], torque1[1],torque1[2],torque1[3],
- #                           		   torque2[0], torque2[1],torque2[2],torque2[3],
- #                           		   torque3[0], torque3[1],torque3[2],torque3[3],
- #                           		   torque4[0], torque4[1],torque4[2],torque4[3]])
 	p.setJointMotorControlArray(robotid,
-                           jointIndices=[1,2,3,4],
+                           jointIndices=[1,2,3,4,6,7,8,9,11,12,13,14,16,17,18,19],
                            controlMode=p.TORQUE_CONTROL,
-                           forces= [tau[0],tau[1],tau[2],tau[3]])
+                           forces= [torque1[0], torque1[1],torque1[2],torque1[3],
+                           		   torque2[0], torque2[1],torque2[2],torque2[3],
+                           		   torque3[0], torque3[1],torque3[2],torque3[3],
+                           		   torque4[0], torque4[1],torque4[2],torque4[3]])
+	# p.setJointMotorControlArray(robotid,
+ #                           jointIndices=[1,2,3,4],
+ #                           controlMode=p.TORQUE_CONTROL,
+ #                           forces= [tau[0],tau[1],tau[2],tau[3]])
 
-	error=np.array(e3,dtype=float)
-	# print("error=",np.round(error,3))
+	error=np.array(e4,dtype=float)
+	print("error=",np.round(error,3))
 	# p.resetJointState(robotid,[1,2,3,4,6,7,8,9,11,12,13,14,16,17,18,19])
 	p.stepSimulation()
 	time.sleep(timeStep)
